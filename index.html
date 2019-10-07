@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Basic Three.js App</title>
+    <style>
+      html, body { margin: 0; padding: 0; overflow: hidden; }
+    </style>
+  </head>
+  <body>
+    <script src="js/three.min.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <script>
+      // Javascript will go here.
+       var scene = new THREE.Scene();
+       var aspect = window.innerWidth/window.innerHeight;
+       var camera = new THREE.PerspectiveCamera(75,aspect,0.1,1000);
+       var renderer = new THREE.WebGLRenderer();
+       renderer.setSize(window.innerWidth,window.innerHeight);
+       document.body.appendChild(renderer.domElement);
+       window.addEventListener('resize',function(){
+           var width = window.innerWidth;
+           var height = window.innerHeight;
+           renderer.setSize(width,height);
+           camera.aspect=width/height;
+           camera.updateProjectionMatrix();
+       })
+       var controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+
+       var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+        
+        var material = new THREE.MeshBasicMaterial({color:0xFFFFFF,wireframe:true});
+        var cube = new THREE.Mesh( geometry, material );
+        scene.add( cube );
+        camera.position.z = 3;
+        var render = function () {
+        requestAnimationFrame( render );
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+        cube.rotation.z += 0.01;
+
+        renderer.render( scene, camera );
+        };
+        render();
+       
+    </script>
+  </body>
+</html>
